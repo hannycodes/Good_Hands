@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Good Hands</title>
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+    <!-- Sidebar Wrapper (Same Logic as User Dashboard) -->
+    <aside class="sidebar-wrapper" id="sidebar">
+        <nav class="sidebar-nav">
+            <div class="header-container">
+                <div class="logo-text">Good Hands <span class="admin-badge">Admin</span></div>
+                <button class="toggle-btn" id="toggleBtn">
+                    <svg id="chevron-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                </button>
+            </div>
+
+            <ul class="nav-list">
+                <a href="#" class="sidebar-link active">
+                    <li class="sidebar-item">
+                        <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg></span>
+                        <span class="text-label">Dashboard</span>
+                        <div class="tooltip">Dashboard</div>
+                    </li>
+                </a>
+                <a href="manage-cases.html" class="sidebar-link">
+                    <li class="sidebar-item">
+                        <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg></span>
+                        <span class="text-label">Manage Cases</span>
+                        <div class="tooltip">Manage Cases</div>
+                    </li>
+                </a>
+                <a href="users.html" class="sidebar-link">
+                    <li class="sidebar-item">
+                        <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+                        <span class="text-label">User Management</span>
+                        <div class="tooltip">User Management</div>
+                    </li>
+                </a>
+                <a href="funds.html" class="sidebar-link">
+                    <li class="sidebar-item">
+                        <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
+                        <span class="text-label">Funds Management</span>
+                        <div class="tooltip">Funds Management</div>
+                    </li>
+                </a>
+                <a href="reports.html" class="sidebar-link">
+                    <li class="sidebar-item">
+                        <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></span>
+                        <span class="text-label">View Reports</span>
+                        <div class="tooltip">View Reports</div>
+                    </li>
+                </a>
+                <a href="settings.html" class="sidebar-link">
+                    <li class="sidebar-item">
+                        <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></span>
+                        <span class="text-label">Settings</span>
+                        <div class="tooltip">Settings</div>
+                    </li>
+                </a>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="content-area">
+        <header class="admin-header">
+            <div>
+                <h1>Admin Hub</h1>
+                <p>Welcome back, Site Administrator.</p>
+            </div>
+            <div class="admin-actions">
+                <button class="btn-accent">+ New Campaign</button>
+            </div>
+        </header>
+
+        <!-- Dynamic Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <p>Total Funds</p>
+                <h2 id="totalFunds">$0.00</h2>
+                <span class="trend up">↑ 12% this month</span>
+            </div>
+            <div class="stat-card">
+                <p>Active Cases</p>
+                <h2 id="activeCases">0</h2>
+                <span class="trend">Across 4 categories</span>
+            </div>
+            <div class="stat-card">
+                <p>Total Users</p>
+                <h2 id="totalUsers">0</h2>
+                <span class="trend">Donors & Volunteers</span>
+            </div>
+            <div class="stat-card">
+                <p>Pending Approvals</p>
+                <h2 id="pendingApprovals" style="color: #ef4444;">0</h2>
+                <span class="trend">Requires Action</span>
+            </div>
+        </div>
+
+        <!-- Management Section -->
+        <section class="management-section">
+            <div class="section-header">
+                <h2>Manage Active Campaigns</h2>
+                <div class="table-filters">
+                    <input type="text" placeholder="Filter by name..." id="tableSearch">
+                </div>
+            </div>
+
+            <div class="table-wrapper">
+                <table id="campaignTable">
+                    <thead>
+                        <tr>
+                            <th>Campaign Name</th>
+                            <th>Target</th>
+                            <th>Raised</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="campaignBody">
+                        <!-- Loaded from Backend -->
+                        <tr>
+                            <td colspan="5" style="text-align:center; padding: 40px;">Loading campaigns...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>

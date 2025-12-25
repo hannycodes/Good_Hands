@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sign Up | Good Hands</title>
+  <link rel="stylesheet" href="css/register.css" />
+</head>
+<body>
+
+  <div class="auth-page">
+    <div class="auth-card">
+
+      <!-- Top SVG Icon -->
+      <div class="login-icon">
+        <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 0a4 4 0 100 8 4 4 0 000-8zm0 9c-4.4 0-8 2.3-8 5v2h16v-2c0-2.7-3.6-5-8-5z"/>
+        </svg>
+      </div>
+
+      <h1>Create an Account</h1>
+      <p class="subtitle">Join Good Hands and start making an impact</p>
+
+      <form id="registerForm">
+
+        <input type="text" name="name" placeholder="Full Name" required />
+        <input type="email" name="email" placeholder="Email Address" required />
+        <input type="password" name="password" placeholder="Password" required />
+        <input type="password" name="confirm_password" placeholder="Confirm Password" required />
+
+
+        <button type="submit" class="primary-btn">
+          Sign Up
+        </button>
+
+      </form>
+
+      <p class="switch-auth">
+        Already have an account?
+        <a href="login.html">Sign in</a>
+      </p>
+
+    </div>
+  </div>
+<script src="js/register.js"></script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Cases | Good Hands</title>
+    <link rel="stylesheet" href="css/browse-cases.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <nav class="nav-container">
+                <div class="sidebar-header">
+                    <div class="logo-text">Good Hands</div>
+                    <button class="toggle-btn" id="toggleBtn">
+                        <svg id="chevron-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                    </button>
+                </div>
+
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="user-dashboard.html">
+                            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg></span>
+                            <span class="link-text">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a href="browse-cases.html">
+                            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="M8 11h6"/><path d="M11 8v6"/></svg></span>
+                            <span class="link-text">Browse Cases</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="history.html">
+                            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="10"/></svg></span>
+                            <span class="link-text">View Donation History</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="profile.html">
+                            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+                            <span class="link-text">Profile</span>
+                        </a>
+                    </li>
+                    <li class="nav-item logout">
+                        <a href="logout.html">
+                            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg></span>
+                            <span class="link-text">Logout</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="main-content">
+            <header class="browse-header">
+                <div class="header-info">
+                    <h1>Find a cause </h1>
+                    <p>Find a mission that speaks to your heart.</p>
+                </div>
+                <div class="search-box">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                    <input type="text" id="caseSearch" placeholder="Search cases...">
+                </div>
+            </header>
+
+            <!-- Grid -->
+            <div class="discovery-grid">
+                <!-- Case 1: Medical -->
+                <div class="case-card" data-category="medical">
+                    <div class="card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&q=80&w=800" alt="Medical">
+                        <span class="category-label">Medical Aid</span>
+                    </div>
+                    <div class="card-info">
+                        <h3>Pediatric Heart Care</h3>
+                        <p>Providing essential surgeries for children with congenital heart defects.</p>
+                        <div class="progress-container">
+                            <div class="progress-bar"><div class="fill" style="width: 75%;"></div></div>
+                            <div class="stats"><span>$15,000 / $20,000</span><span>75%</span></div>
+                        </div>
+                        <a href="case-details.html?case_id=1"><button class="action-btn">Donate Now</button></a>
+                    </div>
+                </div>
+
+                <!-- Case 2: Disaster Relief -->
+                <div class="case-card" data-category="disaster">
+                    <div class="card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?auto=format&fit=crop&q=80&w=800" alt="Disaster">
+                        <span class="category-label">Disaster Relief</span>
+                    </div>
+                    <div class="card-info">
+                        <h3>Flood Emergency Response</h3>
+                        <p>Immediate food, water, and shelter for families displaced by heavy rains.</p>
+                        <div class="progress-container">
+                            <div class="progress-bar"><div class="fill" style="width: 30%;"></div></div>
+                            <div class="stats"><span>$3,000 / $10,000</span><span>30%</span></div>
+                        </div>
+                        <a href="case-details.html?case_id=2"><button class="action-btn">Donate Now</button></a>
+                    </div>
+                </div>
+
+                <!-- Case 3: Education -->
+                <div class="case-card" data-category="education">
+                    <div class="card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&q=80&w=800" alt="Education">
+                         <span class="category-label">Education</span>
+                    </div>
+                    <div class="card-info">
+                        <h3>Laptops for Rural Schools</h3>
+                        <p>Closing the digital divide by providing technology to remote students.</p>
+                        <div class="progress-container">
+                            <div class="progress-bar"><div class="fill" style="width: 50%;"></div></div>
+                            <div class="stats"><span>$5,000 / $10,000</span><span>50%</span></div>
+                        </div>
+                        <a href="case-details.html?case_id=3"><button class="action-btn">Donate Now</button></a>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="js/dashboard.js"></script>
+    <script src="js/browse-cases.js"></script>
+</body>
+</html>

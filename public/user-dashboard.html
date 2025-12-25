@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Good Hands Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+
+    <aside class="sidebar" id="sidebar">
+        <nav class="nav-container">
+            <!-- Logo + Toggle -->
+            <div class="sidebar-header">
+                <div class="logo-text" id="logoText">Good Hands</div>
+                <button class="toggle-btn" id="toggleBtn" aria-label="Toggle Sidebar">
+                    <!-- Chevron Left Icon -->
+                    <svg id="chevron-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                </button>
+            </div>
+
+            <!-- Nav Items -->
+            <ul class="nav-list">
+                <li class="nav-item active" data-tooltip="Dashboard">
+                    <a href="#">
+                        <span class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+                        </span>
+                        <span class="link-text">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-tooltip="Browse Cases">
+                    <a href="browse-cases.html">
+                        <span class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><path d="M8 11h6"/><path d="M11 8v6"/></svg>
+                        </span>
+                        <span class="link-text">Browse Cases</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-tooltip="Donation History">
+                    <a href="#">
+                        <span class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="10"/></svg>
+                        </span>
+                        <span class="link-text">Donation History</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-tooltip="Profile">
+                    <a href="#">
+                        <span class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        </span>
+                        <span class="link-text">Profile</span>
+                    </a>
+                </li>
+                <li class="nav-item logout" data-tooltip="Logout">
+                    <a href="index.html">
+                        <span class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+                        </span>
+                        <span class="link-text">Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+   <main class="content">
+    <!-- Top Header -->
+    <header class="dashboard-header">
+        <div class="welcome-text">
+            <h1>Welcome back</h1>
+            <p>Your contributions have helped 12 families this month.</p>
+        </div>
+        <div class="header-actions">
+            <a href="browse-cases.html"><button class="btn-primary">New Donation</button></a>
+        </div>
+    </header>
+
+    <!-- Stats Grid -->
+    <section class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon" style="background: #eef2ff; color: #4f46e5;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <div class="stat-info">
+                <h3>$4,250.00</h3>
+                <p>Total Donated</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon" style="background: #f0fdf4; color: #16a34a;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div class="stat-info">
+                <h3>24</h3>
+                <p>Lives Impacted</p>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon" style="background: #fff7ed; color: #ea580c;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+            </div>
+            <div class="stat-info">
+                <h3>8</h3>
+                <p>Active Cases</p>
+            </div>
+        </div>
+    </section>
+  <div class="visual-insights">
+    <!-- Chart Card -->
+    <div class="insight-card chart-area">
+        <div class="card-header">
+            <h3>My Donation Trends</h3>
+            <p>Monthly overview</p>
+        </div>
+        <!-- THIS WRAPPER STOPS THE GROWTH -->
+        <div class="chart-container">
+            <canvas id="impactChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Milestone Card -->
+    <div class="insight-card milestone-area">
+        <div class="card-header">
+            <h3>Next Milestone</h3>
+            <p>Reach 'Silver Hero'</p>
+        </div>
+        <div class="circular-container">
+            <div class="progress-circle">
+                <div class="inner-circle">
+                    <span class="percentage">75%</span>
+                </div>
+            </div>
+        </div>
+        <div class="milestone-footer">
+            <p>Impact Level: <strong>Bronze Donor</strong></p>
+        </div>
+    </div>
+</div>
+
+    <div class="dashboard-main-grid">
+        <!-- Urgent Cases -->
+        <section class="cases-section">
+            <div class="section-header">
+                <h2>Urgent Cases</h2>
+                <a href="browse-cases.html"><button class="view-all-btn">View All</button></a>
+            </div>
+            <div class="case-card">
+                <div class="case-content">
+                    <h4>Clean Water for Northern Village</h4>
+                    <p>Providing sustainable water filters to 50 households.</p>
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: 75%;"></div>
+                    </div>
+                    <div class="progress-labels">
+                        <span><strong>$7,500</strong> raised</span>
+                        <span>75%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="case-card">
+                <div class="case-content">
+                    <h4>Emergency Medical Relief</h4>
+                    <p>Surgery funds for pediatric heart patients.</p>
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: 40%;"></div>
+                    </div>
+                    <div class="progress-labels">
+                        <span><strong>$2,000</strong> raised</span>
+                        <span>40%</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent History -->
+        <section class="history-section">
+            <div class="section-header">
+                <h2>Recent Donations</h2>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Case</th>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Water Project</td>
+                            <td>Oct 24, 2023</td>
+                            <td>$100.00</td>
+                            <td><span class="badge success">Completed</span></td>
+                        </tr>
+                        <tr>
+                            <td>Education Fund</td>
+                            <td>Oct 12, 2023</td>
+                            <td>$50.00</td>
+                            <td><span class="badge success">Completed</span></td>
+                        </tr>
+                        <tr>
+                            <td>Medical Relief</td>
+                            <td>Sep 28, 2023</td>
+                            <td>$250.00</td>
+                            <td><span class="badge success">Completed</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+    <div class="bottom-dashboard-row">
+    <!-- Left Column: Impact News Feed -->
+    <section class="news-feed">
+        <div class="section-header">
+            <h2>Latest Impact Updates</h2>
+            <a href="#">See all updates</a>
+        </div>
+        <div class="update-card">
+            <div class="update-img">
+                <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=150" alt="Education">
+            </div>
+            <div class="update-text">
+                <span class="tag">Education</span>
+                <h4>Books delivered to Northern Schools</h4>
+                <p>Thanks to your March donations, 500 students received new curriculum kits.</p>
+                <span class="update-date">2 hours ago</span>
+            </div>
+        </div>
+        <div class="update-card">
+            <div class="update-img">
+                <img src="https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&q=80&w=150" alt="Medical">
+            </div>
+            <div class="update-text">
+                <span class="tag">Medical</span>
+                <h4>Clean Water Project Completed</h4>
+                <p>The filtration system in the rural clinic is now fully operational.</p>
+                <span class="update-date">Yesterday</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Right Column: Quick Stats & Support -->
+    <aside class="quick-utilities">
+        <div class="utility-card active-giving">
+            <h3>Monthly Support</h3>
+            <div class="giving-status">
+                <div class="status-icon">🔄</div>
+                <div>
+                    <p>Next donation: Jan 1st</p>
+                    <strong>$25.00 / month</strong>
+                </div>
+            </div>
+            <button class="btn-outline">Manage Plan</button>
+        </div>
+
+        <div class="utility-card tax-card">
+            <div class="card-icon">📄</div>
+            <h3>Tax Documents</h3>
+            <p>Download your 2025 donation summary for tax purposes.</p>
+            <a href="#" class="download-link">Download PDF (2.4MB)</a>
+        </div>
+    </aside>
+</div>
+</main>
+    <script src="js/dashboard-charts.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

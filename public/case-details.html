@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Details | Good Hands</title>
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --sidebar-bg: #E1E7EF;
+            --text-dark: #22262A;
+            --teal: #4FD1B5;
+            --bg-main: #F4F7FA;
+            --white: #ffffff;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif, system-ui; }
+        body { background-color: var(--bg-main); color: var(--text-dark); overflow-x: hidden; }
+
+        /* --- LAYOUT STRUCTURE --- */
+        .app-container { display: flex; min-height: 100vh; width: 100%; }
+
+        /* --- SIDEBAR STYLES --- */
+        .sidebar {
+            width: 260px;
+            background-color: var(--sidebar-bg);
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            transition: width var(--transition);
+            flex-shrink: 0;
+            border-right: 1px solid rgba(0,0,0,0.05);
+            z-index: 1000;
+        }
+
+        .sidebar.collapsed { width: 80px; }
+
+        .nav-container { padding: 20px 15px; display: flex; flex-direction: column; height: 100%; }
+
+        .sidebar-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 40px; height: 40px; overflow: hidden;
+        }
+
+        .logo-group { display: flex; align-items: center; gap: 10px; }
+        .logo-text { 
+            font-weight: 800; font-size: 1.2rem; white-space: nowrap; 
+            transition: opacity var(--transition); color: var(--text-dark);
+        }
+
+        .sidebar.collapsed .logo-text { opacity: 0; width: 0; pointer-events: none; }
+
+        .toggle-btn {
+            background: var(--white); border: none; padding: 6px; border-radius: 8px;
+            cursor: pointer; display: flex; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .nav-list { list-style: none; flex: 1; }
+        .nav-item a {
+            display: flex; align-items: center; padding: 12px 15px;
+            color: var(--text-dark); text-decoration: none; border-radius: 12px;
+            margin-bottom: 8px; transition: 0.2s; font-weight: 600;
+        }
+        .nav-item.active a { background-color: var(--text-dark); color: var(--sidebar-bg); }
+        .nav-item:hover:not(.active) a { background-color: rgba(34, 38, 42, 0.05); }
+
+        .icon { min-width: 24px; display: flex; justify-content: center; }
+        .link-text { margin-left: 15px; transition: opacity var(--transition); white-space: nowrap; }
+        .sidebar.collapsed .link-text { opacity: 0; pointer-events: none; }
+
+        .logout { margin-top: auto; }
+
+        /* --- MAIN CONTENT AREA --- */
+        .main-content { flex-grow: 1; padding: 40px; min-width: 0; }
+
+        .back-nav { margin-bottom: 25px; }
+        .back-nav a { 
+            text-decoration: none; color: var(--text-dark); font-weight: 700; 
+            display: flex; align-items: center; gap: 8px; font-size: 0.9rem;
+        }
+        .back-nav a:hover { color: var(--teal); }
+
+        /* --- CASE HERO SECTION --- */
+        .case-details-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; }
+
+        .content-card { background: var(--white); border-radius: 24px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); margin-bottom: 30px; }
+
+        .case-hero-img { width: 100%; height: 400px; border-radius: 20px; object-fit: cover; margin-bottom: 25px; }
+
+        .case-title-area { margin-bottom: 20px; }
+        .case-title-area h1 { font-size: 2.2rem; margin-bottom: 10px; }
+        .badge { background: var(--teal); color: var(--text-dark); padding: 5px 15px; border-radius: 8px; font-weight: 800; font-size: 0.75rem; text-transform: uppercase; }
+
+        /* --- PROGRESS & CTA SIDEBAR --- */
+        .sticky-sidebar { position: sticky; top: 40px; }
+        
+        .donation-status-card { background: var(--text-dark); color: var(--white); border-radius: 24px; padding: 30px; text-align: center; }
+        .donation-status-card h2 { font-size: 2rem; color: var(--teal); margin-bottom: 5px; }
+        .donation-status-card p { color: #a0aec0; font-size: 0.9rem; margin-bottom: 20px; }
+
+        .progress-bar-wrap { background: rgba(255,255,255,0.1); height: 10px; border-radius: 5px; margin-bottom: 15px; overflow: hidden; }
+        .progress-fill { background: var(--teal); height: 100%; width: 75%; transition: width 1s ease; }
+
+        .donate-btn { 
+            display: block; width: 100%; background: var(--teal); color: var(--text-dark); 
+            text-align: center; padding: 18px; border-radius: 12px; text-decoration: none; 
+            font-weight: 800; font-size: 1.1rem; transition: transform 0.2s; margin-top: 20px;
+        }
+        .donate-btn:hover { transform: translateY(-3px); opacity: 0.9; }
+
+        /* --- EVIDENCE SECTIONS --- */
+        .section-title { margin: 30px 0 15px; font-size: 1.25rem; border-left: 4px solid var(--teal); padding-left: 15px; }
+        .story-text { line-height: 1.7; color: #4a5568; margin-bottom: 25px; font-size: 1.05rem; }
+
+        .media-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
+        .gallery-img { width: 100%; height: 200px; border-radius: 12px; object-fit: cover; cursor: pointer; transition: 0.3s; }
+        .gallery-img:hover { opacity: 0.8; }
+
+        .video-embed { 
+            width: 100%; height: 350px; background: #000; border-radius: 20px; 
+            display: flex; align-items: center; justify-content: center; position: relative;
+            margin-bottom: 25px; overflow: hidden;
+        }
+        .video-placeholder-text { color: var(--white); text-align: center; z-index: 2; }
+        .play-icon { font-size: 3rem; margin-bottom: 10px; display: block; color: var(--teal); }
+
+        .files-list { list-style: none; }
+        .file-item { 
+            display: flex; align-items: center; justify-content: space-between; 
+            padding: 15px; border: 1px solid #edf2f7; border-radius: 12px; margin-bottom: 10px;
+            transition: 0.2s;
+        }
+        .file-item:hover { background: #f8fafc; border-color: var(--teal); }
+        .file-info { display: flex; align-items: center; gap: 12px; }
+        .download-btn { color: var(--teal); text-decoration: none; font-weight: 700; font-size: 0.85rem; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 1000px) {
+            .case-details-grid { grid-template-columns: 1fr; }
+            .sidebar { position: fixed; left: -260px; }
+            .sidebar.active { left: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <nav class="nav-container">
+                <div class="sidebar-header">
+                    <div class="logo-group">
+                        <div class="logo-text">Good Hands</div>
+                    </div>
+                    <button class="toggle-btn" id="toggleBtn">
+                        <svg id="chevron-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                    </button>
+                </div>
+
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="../public/user-dashboard.html">
+                            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg></span>
+                            <span class="link-text">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item active">
+                        <a href="../public/browse-cases.html">
+                            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span>
+                            <span class="link-text">Browse Cases</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/public/history.html">
+                            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="10"/></svg></span>
+                            <span class="link-text">History</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="profile.html">
+                            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+                            <span class="link-text">Profile</span>
+                        </a>
+                    </li>
+                    <li class="nav-item logout">
+                        <a href="index.html">
+                            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg></span>
+                            <span class="link-text">Logout</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="main-content">
+            <nav class="back-nav">
+                <a href="browse-cases.html">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                    BACK TO BROWSE
+                </a>
+            </nav>
+
+            <div class="case-details-grid">
+                <!-- LEFT CONTENT -->
+                <div class="main-info">
+                    <div class="content-card">
+                        <img src="https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&q=80&w=1200" class="case-hero-img" alt="Hospital Care">
+                        
+                        <div class="case-title-area">
+                            <span class="badge">Medical Emergency</span>
+                            <h1>Pediatric Heart Care for Emily</h1>
+                        </div>
+
+                        <h3 class="section-title">The Story</h3>
+                        <p class="story-text">
+                            Emily is a 4-year-old girl born with a congenital heart defect that requires immediate surgical intervention. 
+                            Her family, living in a remote rural area, has been unable to afford the specialized cardiac care needed to save her life. 
+                            The "Good Hands" medical team has verified this case and partnered with the Central Children's Hospital to ensure Emily receives the valve replacement surgery she deserves.
+                        </p>
+
+                        <h3 class="section-title">Evidence & Gallery</h3>
+                        <div class="media-gallery">
+                            <img src="https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&q=80&w=500" class="gallery-img">
+                            <img src="https://images.unsplash.com/photo-1551076805-e1869033e561?auto=format&fit=crop&q=80&w=500" class="gallery-img">
+                        </div>
+
+                        <div class="video-embed">
+                            <div class="video-placeholder-text">
+                                <span class="play-icon">▶</span>
+                                <p>Watch Family Interview & Doctor's Insight</p>
+                            </div>
+                        </div>
+
+                        <h3 class="section-title">Verification Documents</h3>
+                        <ul class="files-list">
+                            <li class="file-item">
+                                <div class="file-info">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4FD1B5" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                                    <span>Medical_Report_Emily.pdf</span>
+                                </div>
+                                <a href="#" class="download-btn">VIEW PDF</a>
+                            </li>
+                            <li class="file-item">
+                                <div class="file-info">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4FD1B5" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                                    <span>Hospital_Invoice_Estimate.pdf</span>
+                                </div>
+                                <a href="#" class="download-btn">VIEW PDF</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- RIGHT SIDEBAR (Sticky) -->
+                <div class="sticky-sidebar">
+                    <div class="donation-status-card">
+                        <h2>$15,240</h2>
+                        <p>Raised of $20,000 goal</p>
+                        
+                        <div class="progress-bar-wrap">
+                            <div class="progress-fill"></div>
+                        </div>
+                        
+                        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 25px;">
+                            <span>76% Complete</span>
+                            <span>124 Donors</span>
+                        </div>
+
+                        <!-- FIX 1: Added id="mainDonateBtn" here -->
+                        <a href="../donate.php?case_id=1" class="donate-btn" id="mainDonateBtn">DONATE NOW</a>
+                        
+                        <p style="margin-top: 20px; font-size: 0.75rem; color: #718096;">
+                            Your donation is protected by our 100% Transparency Guarantee.
+                        </p>
+                    </div>
+
+                    <div class="content-card" style="margin-top: 20px; padding: 20px;">
+                        <h4 style="margin-bottom: 10px;">Case Verified ✓</h4>
+                        <p style="font-size: 0.85rem; color: #64748b;">
+                            This case has been manually reviewed and verified by the Good Hands Compliance Team.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // 1. Sidebar Logic
+        const sidebar = document.getElementById('sidebar');
+        const toggleBtn = document.getElementById('toggleBtn');
+        const chevronIcon = document.getElementById('chevron-icon');
+
+        if(toggleBtn) {
+            toggleBtn.onclick = () => {
+                sidebar.classList.toggle('collapsed');
+                chevronIcon.style.transform = sidebar.classList.contains('collapsed') ? 'rotate(180deg)' : 'rotate(0deg)';
+            };
+        }
+
+        // --- THE SPECIFIC FIX ---
+        // 2. Grab Case ID from URL (e.g. ?case_id=5)
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('case_id') || params.get('id');
+        const btn = document.getElementById('mainDonateBtn');
+
+        if (id && btn) {
+            // FIX 2: Corrected the path to match your folder structure
+            btn.href = "../php/donate.php?case_id=" + id;
+            console.log("Success: Button link updated to " + btn.href);
+        } else {
+            console.log("Error: Case ID not found in URL or Button ID missing");
+        }
+
+        // 3. Animate Progress Bar
+        setTimeout(() => {
+            const fill = document.querySelector('.progress-fill');
+            if(fill) fill.style.width = '76%';
+        }, 500);
+    });
+</script>
+</body>
+</html>
