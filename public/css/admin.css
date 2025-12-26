@@ -56,8 +56,40 @@ td { padding: 15px 12px; border-bottom: 1px solid #f1f5f9; font-size: 0.9rem; }
 .status-tag { padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; }
 .status-tag.active { background: #dcfce7; color: #166534; }
 
-.btn-edit { background: none; border: 1px solid #e2e8f0; padding: 4px 8px; border-radius: 4px; cursor: pointer; margin-right: 5px; }
-.btn-edit:hover { border-color: var(--clr-accent); }
+/* --- MATTE ACTION BUTTONS --- */
+.btn-edit {
+    background-color: #FFFBEB; /* Soft Matte Yellow */
+    color: #92400E; /* Dark Amber Text */
+    border: 1px solid #FCD34D;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+    margin-right: 5px;
+}
+.btn-edit:hover {
+    background-color: #FEF3C7;
+    transform: translateY(-1px);
+}
+
+.btn-delete {
+    background-color: #FEF2F2; /* Soft Matte Red */
+    color: #991B1B; /* Dark Red Text */
+    border: 1px solid #FECACA;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.btn-delete:hover {
+    background-color: #FEE2E2;
+    transform: translateY(-1px);
+}
+
+/* Ensure the modal is ready for editing */
+#modalTitle { color: var(--clr-ink); margin-bottom: 10px; }
 
 
 

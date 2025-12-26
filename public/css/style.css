@@ -3,6 +3,9 @@
       padding: 0;
       box-sizing: border-box;
     }
+    html {
+  scroll-behavior: smooth;
+}
 
     body {
       font-family: 'Poppins', sans-serif;
@@ -364,7 +367,7 @@
 }
 
 .case-desc {
-  font-size: 0.r85em;
+  font-size: 0.85em;
   color: #0f172a;
   opacity: 0.85;
   margin-bottom: 0.8rem;
@@ -860,14 +863,102 @@
 }
 
 /* Responsive */
-@media (max-width: 900px) {
-  .footer-container {
-    grid-template-columns: 1fr 1fr;
-  }
+/* 1. Hamburger basic style (Hidden on Desktop) */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  z-index: 1100;
+  margin-left: auto;
 }
 
-@media (max-width: 600px) {
-  .footer-container {
-    grid-template-columns: 1fr;
+.hamburger .bar {
+  width: 28px;
+  height: 3px;
+  background-color: #3674B5;
+  border-radius: 2px;
+  transition: 0.3s;
+}
+
+/* 2. MOBILE VIEW LOGIC */
+@media (max-width: 900px) {
+  .hamburger {
+    display: flex; /* Show hamburger */
   }
+
+  /* SIDEBAR DRAWER - PART 1 (Links) */
+  .nav-links {
+    position: fixed;
+    top: 70px; /* Sits below header */
+    right: -100%; /* Hidden off-screen */
+    width: 280px;
+    height: 300px; /* Fixed height for links section */
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    transition: 0.4s ease-in-out;
+    z-index: 1000;
+    
+    /* STRAIGHT EDGES */
+    border-radius: 0; 
+    /* Shadow only on the left side to keep the edge look straight */
+    box-shadow: -5px 0 15px rgba(0,0,0,0.05); 
+  }
+
+  /* Force links to be visible and dark */
+  .nav-links a {
+    color: #0f172a !important;
+    font-size: 1.1rem;
+    font-weight: 600;
+    width: 100%;
+    text-align: center;
+    display: block;
+    border-radius: 0; /* Ensures no curves on link focus/hover */
+  }
+
+  /* SIDEBAR DRAWER - PART 2 (Buttons) */
+  .nav-actions {
+    position: fixed;
+    top: 370px; /* Sits exactly below nav-links */
+    right: -100%; /* Hidden off-screen */
+    width: 280px;
+    height: 180px;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 10px;
+    gap: 1rem;
+    transition: 0.4s ease-in-out;
+    z-index: 1000;
+    
+    /* STRAIGHT EDGES */
+    border-radius: 0; 
+    border-top: 1px solid #f1f1f1; /* Flat separator line instead of curvy gap */
+    box-shadow: -5px 5px 15px rgba(0,0,0,0.05);
+  }
+
+  /* Style buttons for mobile menu - Keep buttons as pills, but the box is straight */
+  .nav-actions .nav-btn {
+    width: 220px;
+    height: 48px;
+    justify-content: center;
+    border-radius: 50px; 
+  }
+
+  /* ACTIVE STATE: Both containers slide in together */
+  .nav-links.active, 
+  .nav-actions.active {
+    right: 0;
+  }
+
+  /* Hamburger animation to X */
+  .hamburger.is-open .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+  .hamburger.is-open .bar:nth-child(2) { opacity: 0; }
+  .hamburger.is-open .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 }

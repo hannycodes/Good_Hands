@@ -2,13 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard | Good Hands</title>
+    <title>Financial Reports | Good Hands Admin</title>
     <link rel="stylesheet" href="css/admin.css">
+    <style>
+        .report-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-bottom: 30px; }
+        .report-card { background: white; padding: 25px; border-radius: 20px; border: 1px solid rgba(34, 38, 42, 0.1); }
+        .report-card h3 { font-size: 1rem; color: #64748b; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .cat-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #f1f5f9; }
+        .cat-name { font-weight: 700; color: var(--clr-ink); text-transform: capitalize; }
+        .cat-val { color: var(--clr-accent); font-weight: 800; }
+
+        .progress-mini { height: 6px; background: #f1f5f9; border-radius: 3px; overflow: hidden; margin-top: 5px; }
+        .progress-fill { height: 100%; background: var(--clr-accent); }
+
+        @media print { .sidebar-wrapper, .btn-accent { display: none; } .content-area { padding: 0; } }
+    </style>
 </head>
 <body>
-
-    <!-- Sidebar Wrapper (Same Logic as User Dashboard) -->
     <aside class="sidebar-wrapper" id="sidebar">
         <nav class="sidebar-nav">
             <div class="header-container">
@@ -19,7 +30,7 @@
             </div>
 
             <ul class="nav-list">
-                <a href="#" class="sidebar-link active">
+                <a href="admin-dashboard.html" class="sidebar-link">
                     <li class="sidebar-item">
                         <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg></span>
                         <span class="text-label">Dashboard</span>
@@ -40,14 +51,14 @@
                         <div class="tooltip">User Management</div>
                     </li>
                 </a>
-                <a href="funds.html" class="sidebar-link">
+                <a href="funds.html" class="sidebar-link ">
                     <li class="sidebar-item">
                         <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
                         <span class="text-label">Funds Management</span>
                         <div class="tooltip">Funds Management</div>
                     </li>
                 </a>
-                <a href="reports.html" class="sidebar-link">
+                <a href="reports.html" class="sidebar-link active">
                     <li class="sidebar-item">
                         <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></span>
                         <span class="text-label">View Reports</span>
@@ -72,73 +83,73 @@
         </nav>
     </aside>
 
-    <!-- Main Content Area -->
     <main class="content-area">
         <header class="admin-header">
-            <div>
-                <h1>Admin Hub</h1>
-                <p>Welcome back, Site Administrator.</p>
-            </div>
-            <div class="admin-actions">
-                <a href="manage-cases.html"><button class="btn-accent">+ New Campaign</button></a>
-            </div>
+            <h1>Impact & Financial Reports</h1>
+            <button class="btn-accent" onclick="window.print()">Download PDF Report</button>
         </header>
 
-        <!-- Dynamic Stats Grid -->
-        <div class="stats-grid">
-            <div class="stat-card">
-                <p>Total Funds</p>
-                <h2 id="totalFunds">$0.00</h2>
-                <span class="trend up">↑ 12% this month</span>
+        <div class="report-grid">
+            <!-- Category Breakdown -->
+            <div class="report-card">
+                <h3>Funding by Category</h3>
+                <div id="category-list">Loading...</div>
             </div>
-            <div class="stat-card">
-                <p>Active Cases</p>
-                <h2 id="activeCases">0</h2>
-                <span class="trend">Across 4 categories</span>
-            </div>
-            <div class="stat-card">
-                <p>Total Users</p>
-                <h2 id="totalUsers">0</h2>
-                <span class="trend">Donors & Volunteers</span>
-            </div>
-            <div class="stat-card">
-                <p>Pending Approvals</p>
-                <h2 id="pendingApprovals" style="color: #ef4444;">0</h2>
-                <span class="trend">Requires Action</span>
+
+            <!-- Goal Achievement -->
+            <div class="report-card">
+                <h3>Case Success Rate</h3>
+                <div id="success-list">Loading...</div>
             </div>
         </div>
 
-        <!-- Management Section -->
-        <section class="management-section">
-            <div class="section-header">
-                <h2>Manage Active Campaigns</h2>
-                <div class="table-filters">
-                    <input type="text" placeholder="Filter by name..." id="tableSearch">
-                </div>
-            </div>
-
-            <div class="table-wrapper">
-                <table id="campaignTable">
-                    <thead>
-                        <tr>
-                            <th>Campaign Name</th>
-                            <th>Target</th>
-                            <th>Raised</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="campaignBody">
-                        <!-- Loaded from Backend -->
-                        <tr>
-                            <td colspan="5" style="text-align:center; padding: 40px;">Loading campaigns...</td>
-                        </tr>
-                    </tbody>
-                </table>
+        <section class="report-card">
+            <h3>Monthly Growth</h3>
+            <p style="font-size: 0.9rem; color: #64748b;">Financial summary of the last 30 days compared to previous month.</p>
+            <div id="growth-stats" style="margin-top:20px; display:flex; gap:40px;">
+                <!-- Filled by JS -->
             </div>
         </section>
     </main>
 
-    <script src="js/admin.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const sidebar = document.getElementById('sidebar');
+            document.getElementById('toggleBtn').onclick = () => sidebar.classList.toggle('collapsed');
+
+            const res = await fetch('../php/get_reports_api.php');
+            const data = await res.json();
+
+            if (data.success) {
+                // Render Category List
+                document.getElementById('category-list').innerHTML = data.categories.map(c => `
+                    <div class="cat-row">
+                        <span class="cat-name">${c.category}</span>
+                        <span class="cat-val">ETB ${Number(c.total).toLocaleString()}</span>
+                    </div>
+                `).join('');
+
+                // Render Success Rate
+                document.getElementById('success-list').innerHTML = data.campaigns.map(c => {
+                    const perc = Math.min(Math.round((c.raised / c.goal) * 100), 100);
+                    return `
+                        <div style="margin-bottom:15px;">
+                            <div style="display:flex; justify-content:space-between; font-size:0.85rem;">
+                                <span>${c.title}</span>
+                                <strong>${perc}%</strong>
+                            </div>
+                            <div class="progress-mini"><div class="progress-fill" style="width:${perc}%"></div></div>
+                        </div>
+                    `;
+                }).join('');
+
+                // Render Growth
+                document.getElementById('growth-stats').innerHTML = `
+                    <div><p style="font-size:0.7rem; font-weight:700;">TOTAL REVENUE</p><h2>ETB ${data.total_revenue}</h2></div>
+                    <div><p style="font-size:0.7rem; font-weight:700;">DONATIONS</p><h2>${data.total_count}</h2></div>
+                `;
+            }
+        });
+    </script>
 </body>
 </html>

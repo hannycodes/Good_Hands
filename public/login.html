@@ -21,23 +21,27 @@
 
       <div id="error-msg" class="error-msg"></div>
 
-      <form id="loginForm" action="login.php" method="POST">
+      <form id="loginForm">
         <div class="input-group">
           <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <path fill="#4FD1B5" d="M12 13.065L2 6v12h20V6l-10 7.065zM12 11L2 4h20L12 11z"/>
           </svg>
-          <input type="email" name="email" placeholder="Email" required>
+          <input type="email" name="email" placeholder="Email" required autocomplete="email">
         </div>
 
         <div class="input-group">
           <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <path fill="#4FD1B5" d="M12 17a2 2 0 100-4 2 2 0 000 4zm6-7h-1V7a5 5 0 00-10 0v3H6a2 2 0 00-2 2v9a2 2 0 002 2h12a2 2 0 002-2v-9a2 2 0 00-2-2zm-8-3a3 3 0 016 0v3h-6V7zm8 14H6v-9h12v9z"/>
           </svg>
-          <input type="password" name="password" id="password" placeholder="Password" required>
+          <input type="password" name="password" id="password" placeholder="Password" required autocomplete="current-password">
           <button type="button" id="togglePassword" class="toggle-btn">
             <svg id="eyeOpen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#4FD1B5" width="20">
               <path d="M12 5c-7 0-11 7-11 7s4 7 11 7 11-7 11-7-4-7-11-7zm0 12a5 5 0 110-10 5 5 0 010 10zm0-8a3 3 0 100 6 3 3 0 000-6z"/>
             </svg>
+            <svg id="eyeClosed" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#4FD1B5" width="20" style="display:none;">
+  <path d="M12 19c-4.97 0-9-4.03-9-9s4.03-9 9-9 9 4.03 9 9-4.03 9-9 9zm0-16c-3.86 0-7 3.14-7 7s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm0 11c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+  <path d="M2 2l20 20"/> <!-- This adds the slash through the eye -->
+</svg>
           </button>
         </div>
 

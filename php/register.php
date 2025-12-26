@@ -1,8 +1,9 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+error_reporting(0);
+ini_set('display_errors', 0);
 
 require 'db.php'; // make sure this path is correct
+header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
@@ -42,5 +43,10 @@ try {
     $stmt->execute([$name, $email, $hash]);
     echo json_encode(['success' => true]);
 } catch (PDOException $e) {
-    echo json_encode(['error' => 'Database error', 'message' => $e->getMessage()]);
+    // Check if error code is 23000 (Duplicate Entry)
+    if ($e->getCode() == 23000) {
+        echo json_encode(['success' => false, 'error' => 'This email is already registered.']);
+    } else {
+        echo json_encode(['success' => false, 'error' => 'Database error. Please try again.']);
+    }
 }

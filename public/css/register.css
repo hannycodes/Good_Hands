@@ -110,11 +110,12 @@ body {
 .error-msg {
   background-color: #f8d7da;
   color: #842029;
-  padding: 8px;
-  border-radius: 6px;
-  margin-bottom: 10px;
-  display: none;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
   font-size: 13px;
+  display: none;
+  border: 1px solid #f5c2c7;
 }
 .forgot-link {
     font-size: 0.85rem;
@@ -154,7 +155,8 @@ body {
   border-radius: 14px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.08);
   text-align: center;
-  height: 470px;
+  min-height: 470px;
+  padding-bottom: 20px;
 }
 
 .login-icon {
@@ -203,6 +205,7 @@ body {
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .primary-btn:hover {

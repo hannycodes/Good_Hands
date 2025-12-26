@@ -19,13 +19,13 @@
 
       <h1>Create an Account</h1>
       <p class="subtitle">Join Good Hands and start making an impact</p>
-
+      <div id="error-msg" class="error-msg" style="display:none; color: #842029; background-color: #f8d7da; padding: 10px; border-radius: 8px; margin-bottom: 15px; font-size: 13px; text-align: center;"></div>
       <form id="registerForm">
 
-        <input type="text" name="name" placeholder="Full Name" required />
-        <input type="email" name="email" placeholder="Email Address" required />
-        <input type="password" name="password" placeholder="Password" required />
-        <input type="password" name="confirm_password" placeholder="Confirm Password" required />
+        <input type="text" name="name" placeholder="Full Name" required  autocomplete="name"/>
+        <input type="email" name="email" placeholder="Email Address" required autocomplete="email"/>
+        <input type="password" name="password" placeholder="Password" required autocomplete="new-password" />
+        <input type="password" name="confirm_password" placeholder="Confirm Password" required autocomplete="new-password" />
 
 
         <button type="submit" class="primary-btn">

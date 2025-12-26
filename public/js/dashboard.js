@@ -1,49 +1,66 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // --- 1. SIDEBAR TOGGLE ---
     const sidebar = document.getElementById('sidebar');
     const toggleBtn = document.getElementById('toggleBtn');
-    const chevronIcon = document.getElementById('chevron-icon');
-    const navItems = document.querySelectorAll('.nav-item');
+    const chevron = document.getElementById('chevron-icon');
 
-    // Toggle Sidebar Collapse
-    toggleBtn.addEventListener('click', () => {
-        sidebar.classList.toggle('collapsed');
-        
-        // Change icon based on state
-        if (sidebar.classList.contains('collapsed')) {
-            // Chevron Right
-            chevronIcon.innerHTML = '<path d="m9 18 6-6-6-6"/>';
-        } else {
-            // Chevron Left
-            chevronIcon.innerHTML = '<path d="m15 18-6-6 6-6"/>';
+    if (toggleBtn && sidebar) {
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+            if (chevron) {
+                chevron.style.transform = sidebar.classList.contains('collapsed') ? 'rotate(180deg)' : 'rotate(0deg)';
+            }
+        });
+    }
+
+    // --- 2. FETCH DASHBOARD DATA ---
+    async function loadDashboard() {
+        try {
+            const response = await fetch('../php/get_dashboard_data.php');
+            const data = await response.json();
+
+            if (data.success) {
+                // Safety Check: Only update elements if they exist on the current page
+                const userNameEl = document.getElementById('user-name');
+                if (userNameEl) userNameEl.innerText = data.user_name;
+
+                const totalDonatedEl = document.getElementById('stat-total-donated');
+                if (totalDonatedEl) totalDonatedEl.innerText = `ETB ${data.stats.total}`;
+
+                const livesEl = document.getElementById('stat-lives-impacted');
+                if (livesEl) livesEl.innerText = data.stats.lives;
+
+                const activeCasesEl = document.getElementById('stat-active-cases');
+                if (activeCasesEl) activeCasesEl.innerText = data.stats.active;
+
+                // Update Table (if on dashboard page)
+                const tableBody = document.getElementById('history-table-body');
+                if (tableBody) {
+                    tableBody.innerHTML = "";
+                    if (data.history.length === 0) {
+                        tableBody.innerHTML = "<tr><td colspan='4' style='text-align:center'>No recent donations</td></tr>";
+                    } else {
+                        data.history.forEach(row => {
+                            tableBody.innerHTML += `
+                                <tr>
+                                    <td>${row.title}</td>
+                                    <td>${new Date(row.donated_at).toLocaleDateString()}</td>
+                                    <td>ETB ${parseFloat(row.amount).toLocaleString()}</td>
+                                    <td><span class="badge success">Completed</span></td>
+                                </tr>
+                            `;
+                        });
+                    }
+                }
+            }
+        } catch (err) {
+            console.error("Dashboard Load Error:", err);
         }
-    });
+    }
 
-    // Handle Active State Clicking
-    navItems.forEach(item => {
-        item.addEventListener('click', () => {
-            navItems.forEach(i => i.classList.remove('active'));
-            item.classList.add('active');
-        });
-    });
-});
-// Add this to your existing script.js
-document.addEventListener('DOMContentLoaded', () => {
-    // Animate progress bars on load
-    const bars = document.querySelectorAll('.progress-bar');
-    bars.forEach(bar => {
-        const width = bar.style.width;
-        bar.style.width = '0';
-        setTimeout(() => {
-            bar.style.transition = 'width 1s ease-in-out';
-            bar.style.width = width;
-        }, 200);
-    });
-
-    // Simple "New Donation" button interaction
-    const donateBtn = document.querySelector('.btn-primary');
-    if (donateBtn) {
-        donateBtn.addEventListener('click', () => {
-            alert('Redirecting to donation page...');
-        });
+    // Only run the fetch if we are on the dashboard page
+    // (Check for a unique dashboard element)
+    if (document.getElementById('user-name')) {
+        loadDashboard();
     }
 });

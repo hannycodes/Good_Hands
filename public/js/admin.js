@@ -4,78 +4,61 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggleBtn = document.getElementById('toggleBtn');
     const chevron = document.getElementById('chevron-icon');
 
-    toggleBtn.addEventListener('click', () => {
-        sidebar.classList.toggle('collapsed');
-        chevron.style.transform = sidebar.classList.contains('collapsed') ? 'rotate(180deg)' : 'rotate(0deg)';
-    });
-
-    // 2. BACKEND CONNECTIVITY LOGIC
-    // Replace this URL with your actual API endpoint (e.g., http://localhost:5000/api/admin/stats)
-    const API_BASE_URL = "https://api.yourcharity.com"; 
-
-    async function loadAdminDashboard() {
-        try {
-            // Simulated Data Fetching (Replace with real fetch calls)
-            // const statsResponse = await fetch(`${API_BASE_URL}/stats`);
-            // const stats = await statsResponse.json();
-
-            // Mocking the result for demonstration
-            const mockStats = {
-                funds: "$142,500",
-                cases: 24,
-                users: 1104,
-                pending: 3
-            };
-
-            // Update DOM with Stats
-            document.getElementById('totalFunds').innerText = mockStats.funds;
-            document.getElementById('activeCases').innerText = mockStats.cases;
-            document.getElementById('totalUsers').innerText = mockStats.users;
-            document.getElementById('pendingApprovals').innerText = mockStats.pending;
-
-            loadCampaignTable();
-        } catch (err) {
-            console.error("Error loading dashboard data:", err);
-        }
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+            chevron.style.transform = sidebar.classList.contains('collapsed') ? 'rotate(180deg)' : 'rotate(0deg)';
+        });
     }
 
-    async function loadCampaignTable() {
+    // 2. Fetch Admin Data
+    async function loadAdminHub() {
         const tableBody = document.getElementById('campaignBody');
         
         try {
-            // Real fetch call would look like this:
-            // const response = await fetch(`${API_BASE_URL}/campaigns`);
-            // const campaigns = await response.json();
+            const response = await fetch('../php/get_admin_dashboard.php');
+            const data = await response.json();
 
-            const mockCampaigns = [
-                { name: "Clean Water Initiative", target: "$20k", raised: "$15k", status: "Active" },
-                { name: "Education for All", target: "$10k", raised: "$3k", status: "Active" },
-                { name: "Emergency Relief", target: "$50k", raised: "$42k", status: "Active" }
-            ];
+            if (data.success) {
+                // Update Stat Cards
+                document.getElementById('totalFunds').innerText = `ETB ${data.stats.funds}`;
+                document.getElementById('activeCases').innerText = data.stats.active;
+                document.getElementById('totalUsers').innerText = data.stats.users;
+                document.getElementById('pendingApprovals').innerText = data.stats.pending;
 
-            tableBody.innerHTML = ""; // Clear loader
-
-            mockCampaigns.forEach(campaign => {
-                const row = `
-                    <tr>
-                        <td><strong>${campaign.name}</strong></td>
-                        <td>${campaign.target}</td>
-                        <td>${campaign.raised}</td>
-                        <td><span class="status-tag active">${campaign.status}</span></td>
-                        <td>
-                            <button class="btn-edit">Edit</button>
-                            <button class="btn-edit" style="color: #ef4444;">Delete</button>
-                        </td>
-                    </tr>
-                `;
-                tableBody.innerHTML += row;
-            });
-
+                // Update Campaign Table
+                tableBody.innerHTML = ""; 
+                data.campaigns.forEach(c => {
+                    const statusClass = c.status === 'active' ? 'active' : '';
+                    tableBody.innerHTML += `
+                        <tr>
+                            <td>
+                                <div style="font-weight:700;">${c.title}</div>
+                                <div style="font-size:0.75rem; color:#64748b;">${c.category}</div>
+                            </td>
+                            <td>ETB ${Number(c.goal_amount).toLocaleString()}</td>
+                            <td>ETB ${Number(c.raised).toLocaleString()}</td>
+                            <td><span class="status-tag ${statusClass}">${c.status}</span></td>
+                            <td>
+                                <button class="btn-edit" onclick="editCase(${c.id})">Edit</button>
+                                <button class="btn-edit" style="color: #ef4444;" onclick="deleteCase(${c.id})">Delete</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            } else {
+                alert("Error: " + data.error);
+                if(data.error === 'Unauthorized Access') window.location.href = 'login.html';
+            }
         } catch (err) {
-            tableBody.innerHTML = "<tr><td colspan='5'>Failed to load campaigns.</td></tr>";
+            console.error("Admin Load Error:", err);
+            tableBody.innerHTML = "<tr><td colspan='5'>Connection failed.</td></tr>";
         }
     }
 
-    // Call on load
-    loadAdminDashboard();
+    loadAdminHub();
 });
+
+// Placeholders for future management actions
+function editCase(id) { console.log("Editing case:", id); }
+function deleteCase(id) { if(confirm("Are you sure?")) console.log("Deleting case:", id); }

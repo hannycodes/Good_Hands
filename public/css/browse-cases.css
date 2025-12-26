@@ -22,7 +22,14 @@ body { background: var(--body-bg); overflow-x: hidden; }
     flex-shrink: 0;
     border-right: 1px solid rgba(0,0,0,0.05);
 }
-
+.icon {
+    min-width: 24px;
+    height: 24px; /* Force a square shape */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0; /* Prevents icon from squishing */
+}
 
 .sidebar.collapsed { width: 80px; }
 
@@ -45,7 +52,7 @@ body { background: var(--body-bg); overflow-x: hidden; }
 
 .nav-item a {
     display: flex; align-items: center; padding: 12px 15px; color: var(--primary-dark);
-    text-decoration: none; border-radius: 12px; margin-bottom: 8px; font-weight: 500; transition: 0.2s;
+    text-decoration: none; border-radius: 12px; margin-bottom: 8px; font-weight: 500;transition: all 0.3s ease;
 }
 
 .nav-item.active a { background: var(--primary-dark); color: var(--sidebar-bg); }
@@ -101,10 +108,22 @@ body { background: var(--body-bg); overflow-x: hidden; }
 .progress-container .progress-bar { height: 8px; background: #f1f5f9; border-radius: 10px; overflow: hidden; margin-bottom: 10px; }
 .progress-container .fill { height: 100%; background: #4FD1B5; border-radius: 10px; }
 .stats { display: flex; justify-content: space-between; font-size: 0.75rem; color: #475569; font-weight: 600; }
-
 .action-btn {
-    width: 100%; margin-top: 25px; padding: 12px; border-radius: 12px; border: 2px solid var(--sidebar-bg);
-    background: white; font-weight: 700; cursor: pointer; transition: 0.2s;color: #4FD1B5;
+    width: 100%;
+    margin-top: 25px;
+    padding: 12px;
+    border-radius: 12px;
+    border: 2px solid var(--primary-dark); /* Match the dark theme */
+    background: transparent;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+    color: var(--primary-dark);
+}
+
+.action-btn:hover {
+    background: var(--primary-dark);
+    color: var(--sidebar-bg);
 }
 
 .action-btn:hover { background: #4FD1B5; color: black; }

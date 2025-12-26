@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Good Hands Dashboard</title>
+    <title> Dashboard | Good Hands</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="css/dashboard.css">
 </head>
@@ -23,7 +23,7 @@
             <!-- Nav Items -->
             <ul class="nav-list">
                 <li class="nav-item active" data-tooltip="Dashboard">
-                    <a href="#">
+                    <a href="user-dashboard.html">
                         <span class="icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
                         </span>
@@ -39,7 +39,7 @@
                     </a>
                 </li>
                 <li class="nav-item" data-tooltip="Donation History">
-                    <a href="#">
+                    <a href="history.html">
                         <span class="icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="10"/></svg>
                         </span>
@@ -47,7 +47,7 @@
                     </a>
                 </li>
                 <li class="nav-item" data-tooltip="Profile">
-                    <a href="#">
+                    <a href="profile.html">
                         <span class="icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                         </span>
@@ -55,7 +55,7 @@
                     </a>
                 </li>
                 <li class="nav-item logout" data-tooltip="Logout">
-                    <a href="index.html">
+                    <a href="../php/logout.php">
                         <span class="icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
                         </span>
@@ -70,7 +70,7 @@
     <!-- Top Header -->
     <header class="dashboard-header">
         <div class="welcome-text">
-            <h1>Welcome back</h1>
+            <h1>Welcome back, <span id="user-name">...</span></h1>
             <p>Your contributions have helped 12 families this month.</p>
         </div>
         <div class="header-actions">
@@ -85,7 +85,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
             </div>
             <div class="stat-info">
-                <h3>$4,250.00</h3>
+                <h3 id="stat-total-donated">ETB 0.00</h3>
                 <p>Total Donated</p>
             </div>
         </div>
@@ -94,7 +94,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             </div>
             <div class="stat-info">
-                <h3>24</h3>
+                <h3 id="stat-live-impacted">0</h3>
                 <p>Lives Impacted</p>
             </div>
         </div>
@@ -103,7 +103,7 @@
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
             </div>
             <div class="stat-info">
-                <h3>8</h3>
+                <h3 id="stat-active-cases">0</h3>
                 <p>Active Cases</p>
             </div>
         </div>
@@ -190,7 +190,7 @@
                             <th>Status</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="history-table-body">
                         <tr>
                             <td>Water Project</td>
                             <td>Oct 24, 2023</td>
@@ -268,7 +268,7 @@
     </aside>
 </div>
 </main>
-    <script src="js/dashboard-charts.js"></script>
-    <script src="js/dashboard.js"></script>
+   <script src="js/dashboard-charts.js"></script>
+    <script src="../public/js/dashboard.js"></script>
 </body>
 </html>

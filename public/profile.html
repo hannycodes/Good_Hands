@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Settings | Good Hands</title>
+    <style>
+        /* --- INTEGRATED PROTOCOL CSS --- */
+        :root {
+            --sidebar-bg: #E1E7EF;
+            --text-dark: #22262A;
+            --teal: #4FD1B5;
+            --bg-main: #F4F7FA;
+            --white: #ffffff;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg-main); color: var(--text-dark); display: flex; min-height: 100vh; }
+
+        /* --- SIDEBAR --- */
+        .sidebar { width: 260px; background: var(--sidebar-bg); height: 100vh; position: sticky; top: 0; transition: width var(--transition); flex-shrink: 0; border-right: 1px solid rgba(0,0,0,0.05); }
+        .sidebar.collapsed { width: 80px; }
+        .nav-container { padding: 20px 15px; display: flex; flex-direction: column; height: 100%; }
+        .sidebar-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 40px; }
+        .logo-text { font-weight: 800; font-size: 1.25rem; white-space: nowrap; transition: opacity var(--transition); }
+        .sidebar.collapsed .logo-text { opacity: 0; width: 0; pointer-events: none; }
+        .toggle-btn { background: white; border: none; padding: 6px; border-radius: 8px; cursor: pointer; display: flex; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .nav-list { list-style: none; flex: 1; }
+        .nav-item a { display: flex; align-items: center; padding: 12px 15px; color: var(--text-dark); text-decoration: none; border-radius: 12px; margin-bottom: 8px; font-weight: 600; }
+        .nav-item.active a { background-color: var(--text-dark); color: var(--sidebar-bg); }
+        .icon { min-width: 24px; display: flex; justify-content: center; }
+        .link-text { margin-left: 15px; transition: opacity var(--transition); white-space: nowrap; }
+        .sidebar.collapsed .link-text { opacity: 0; pointer-events: none; }
+
+        /* --- PROFILE CONTENT --- */
+        .main-content { flex-grow: 1; padding: 40px; min-width: 0; }
+        .profile-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 30px; }
+        
+        .card { background: white; padding: 30px; border-radius: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); border: 1px solid #eef2f6; margin-bottom: 30px; }
+        .card h2 { font-size: 1.2rem; margin-bottom: 20px; border-bottom: 1px solid #f1f5f9; padding-bottom: 15px; }
+
+        /* Profile Header */
+        .user-avatar-section { text-align: center; margin-bottom: 30px; }
+        .avatar-circle { width: 100px; height: 100px; background: var(--sidebar-bg); border: 4px solid var(--white); border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: 800; color: var(--text-dark); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        
+        /* Form Styling */
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 0.85rem; font-weight: 700; margin-bottom: 8px; color: #64748b; }
+        .form-group input { width: 100%; padding: 12px 15px; border: 1px solid #e2e8f0; border-radius: 10px; outline: none; transition: 0.2s; }
+        .form-group input:focus { border-color: var(--teal); box-shadow: 0 0 0 3px rgba(79, 209, 181, 0.1); }
+        
+        .btn-save { background: var(--text-dark); color: var(--white); border: none; padding: 12px 25px; border-radius: 10px; font-weight: 700; cursor: pointer; width: 100%; transition: 0.3s; }
+        .btn-save:hover { opacity: 0.9; transform: translateY(-1px); }
+        .btn-teal { background: var(--teal); color: var(--text-dark); }
+
+        .message-box { padding: 12px; border-radius: 10px; font-size: 0.85rem; text-align: center; margin-bottom: 20px; display: none; }
+        .success { background: #dcfce7; color: #166534; display: block; }
+        .error { background: #fee2e2; color: #991b1b; display: block; }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar" id="sidebar">
+        <nav class="nav-container">
+            <div class="sidebar-header">
+                <div class="logo-text">Good Hands</div>
+                <button class="toggle-btn" id="toggleBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="chevron-icon"><path d="m15 18-6-6 6-6"/></svg>
+                </button>
+            </div>
+            <ul class="nav-list">
+                <li class="nav-item"><a href="user-dashboard.html"><span class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg></span><span class="link-text">Dashboard</span></a></li>
+                <li class="nav-item"><a href="browse-cases.html"><span class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></span><span class="link-text">Browse Cases</span></a></li>
+                <li class="nav-item"><a href="history.html"><span class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="10"/></svg></span><span class="link-text">History</span></a></li>
+                <li class="nav-item active"><a href="profile.html"><span class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span class="link-text">Profile</span></a></li>
+                <li class="nav-item logout" style="margin-top:auto;"><a href="../php/logout.php"><span class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg></span><span class="link-text">Logout</span></a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <h1>Profile</h1>
+        <p style="color: #64748b; margin-bottom: 30px;">Manage your account details and security.</p>
+
+        <div class="profile-grid">
+            <!-- LEFT: VIEW INFO -->
+            <section>
+                <div class="card">
+                    <div class="user-avatar-section">
+                        <div class="avatar-circle" id="avatar-initial">U</div>
+                        <h3 id="display-name" style="margin-bottom: 5px;">Loading...</h3>
+                        <p id="display-email" style="color: #64748b; font-size: 0.9rem;">...</p>
+                        <p style="margin-top:15px; font-size:0.75rem; color:var(--teal); font-weight:700;">Verified Donor ✓</p>
+                    </div>
+                    <div style="background: #f8fafc; padding: 15px; border-radius: 12px; font-size: 0.85rem;">
+                        <p><strong>Member Since:</strong> <span id="join-date">Dec 2025</span></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- RIGHT: EDIT INFO & PASSWORD -->
+            <section>
+                <!-- Edit General Info -->
+                <div class="card">
+                    <h2>Personal Information</h2>
+                    <div id="general-msg" class="message-box"></div>
+                    <form id="edit-profile-form">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" name="name" id="input-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" name="email" id="input-email" required>
+                        </div>
+                        <button type="submit" class="btn-save btn-teal">Save Changes</button>
+                    </form>
+                </div>
+
+                <!-- Change Password -->
+                <div class="card">
+                    <h2>Change Password</h2>
+                    <div id="password-msg" class="message-box"></div>
+                    <form id="change-password-form">
+                        <div class="form-group">
+                            <label>Current Password</label>
+                            <input type="password" name="old_password" required>
+                        </div>
+                        <div class="form-group">
+                            <label>New Password</label>
+                            <input type="password" name="new_password" required>
+                        </div>
+                        <button type="submit" class="btn-save">Update Password</button>
+                    </form>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Sidebar logic
+            const sidebar = document.getElementById('sidebar');
+            const toggleBtn = document.getElementById('toggleBtn');
+            toggleBtn.onclick = () => sidebar.classList.toggle('collapsed');
+
+            // 1. Fetch Current Profile Data
+            async function fetchProfile() {
+                const res = await fetch('../php/get_profile_data.php');
+                const data = await res.json();
+                if(data.success) {
+                    document.getElementById('display-name').innerText = data.name;
+                    document.getElementById('display-email').innerText = data.email;
+                    document.getElementById('input-name').value = data.name;
+                    document.getElementById('input-email').value = data.email;
+                    document.getElementById('avatar-initial').innerText = data.name.charAt(0).toUpperCase();
+                }
+            }
+            fetchProfile();
+
+            // 2. Handle Profile Update
+            document.getElementById('edit-profile-form').onsubmit = async (e) => {
+                e.preventDefault();
+                const msg = document.getElementById('general-msg');
+                const res = await fetch('../php/update_profile.php', {
+                    method: 'POST',
+                    body: new FormData(e.target)
+                });
+                const data = await res.json();
+                msg.innerText = data.message;
+                msg.className = 'message-box ' + (data.success ? 'success' : 'error');
+                if(data.success) fetchProfile();
+            };
+
+            // 3. Handle Password Change
+            document.getElementById('change-password-form').onsubmit = async (e) => {
+                e.preventDefault();
+                const msg = document.getElementById('password-msg');
+                const res = await fetch('../php/change_password.php', {
+                    method: 'POST',
+                    body: new FormData(e.target)
+                });
+                const data = await res.json();
+                msg.innerText = data.message;
+                msg.className = 'message-box ' + (data.success ? 'success' : 'error');
+                if(data.success) e.target.reset();
+            };
+        });
+    </script>
+</body>
+</html>
